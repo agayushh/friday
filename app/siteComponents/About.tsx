@@ -1,35 +1,36 @@
-import React from "react";
+import Section from "./Section";
+
+const Redacted = ({ children }: { children: React.ReactNode }) => (
+  <span className="redact" tabIndex={0}>
+    {children}
+  </span>
+);
 
 const About = () => {
   return (
-    <section id="about" className="mt-8 m-2" aria-labelledby="about-heading">
-      <h2 id="about-heading" className="text-2xl font-jura tracking-wide text-gray-600 dark:text-gray-400">
-        {" "}
-        ABOUT
-      </h2>
-      <div className="border-b absolute left-1/2 -translate-x-1/2 w-screen" aria-hidden="true"></div>
-      <br />
-      <div className="font-maven text-lg leading-6 text-black dark:text-white">
-        Hi, I&apos;m Ayush, a developer who works a bit like an undercover
-        operator. Most people just see me writing code, but behind the scenes,
-        I&apos;m someone who quietly solves problems, builds systems, and keeps
-        things running without drawing too much attention. I&apos;ve worked
-        across the stack and I treat every project like a mission: understand
-        the objective, plan the approach, and execute with focus. I contribute
-        to open source projects and maintain my own side projects. I enjoy
-        diving into new technologies and figuring out how to use them
-        effectively. And I am interested in knowing the system architecture and
-        design principles that make software robust and scalable. Outside of
-        code, I have organized events, led a technical club, and taken on
-        projects that push me to learn something new. And I have also got
-        acknowledged by{" "}
-        <span className="underline">
-          Chief Minister of Haryana
-        </span>{" "}
-        for a technical project I have worked on. I&apos;m looking for
-        opportunities where I can contribute my skills and grow as a developer.
+    <Section id="profile" index="01" title="Profile" meta="Partially redacted">
+      <div className="space-y-4 px-4 py-5 text-[15px] leading-7 text-foreground/90 sm:px-6 sm:py-6">
+        <p>
+          Hi, I&apos;m Ayush — a developer who works a bit like an{" "}
+          <Redacted>undercover operator</Redacted>. Most people just see me
+          writing code; behind the scenes I quietly solve problems, build
+          systems, and keep things running without drawing attention. Every
+          project is a mission: understand the objective, plan the approach,
+          execute with focus.
+        </p>
+        <p>
+          I contribute to <Redacted>open source</Redacted>, maintain my own side
+          projects, and like digging into the system architecture and design
+          principles that make software robust at scale. Off the keyboard
+          I&apos;ve organized events, led a technical club, and was acknowledged
+          by the <Redacted>Chief Minister of Haryana</Redacted> for a technical
+          project. Now looking for a team where I can contribute and grow.
+        </p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+          Hover or tap redacted lines to declassify
+        </p>
       </div>
-    </section>
+    </Section>
   );
 };
 
