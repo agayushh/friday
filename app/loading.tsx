@@ -1,10 +1,14 @@
 export default function Loading() {
   return (
-    <div className="flex justify-center items-center min-h-screen" role="status" aria-live="polite" aria-label="Loading portfolio content">
-      <div className="flex flex-col items-center space-y-4">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-foreground"></div>
-        <p className="text-muted-foreground">Loading portfolio...</p>
-      </div>
+    <div
+      className="flex min-h-screen items-center justify-center"
+      role="status"
+      aria-live="polite"
+    >
+      <p className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <span className="size-1.5 animate-pulse rounded-full bg-signal" />
+        Retrieving file
+      </p>
     </div>
   );
 }
