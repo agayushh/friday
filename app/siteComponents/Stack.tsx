@@ -1,44 +1,49 @@
 import Image from "next/image";
 import { TECH_STACK } from "../config/techStack";
-import { SimpleTooltip } from "@/components/ui/tooltip";
+import Section from "./Section";
 
 export default function Stack() {
   return (
-    <section className="mt-10" aria-labelledby="stack-heading">
-      <h2 id="stack-heading" className="text-2xl pl-3 tracking-wide font-jura text-gray-600 dark:text-gray-400">
-        STACK
-      </h2>
-      <div className="border-t absolute w-screen left-1/2 -translate-x-1/2" aria-hidden="true"></div>
-      <div className="mt-5 mb-4 grid grid-cols-6 sm:grid-cols-7 md:grid-cols-9 lg:grid-cols-10 xl:grid-cols-12 gap-4 px-4 justify-items-center">
-        {TECH_STACK.map((stk) => {
-          return (
-            <SimpleTooltip key={stk.title} content={stk.title}>
-              <div className="h-10 w-10 mx-1 transition-transform duration-300 hover:scale-115">
-                <a 
-                  href={stk.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Learn more about ${stk.title}`}
-                >
-                  {typeof stk.icon === "string" ? (
-                    <Image
-                      src={stk.icon}
-                      alt={`${stk.title} logo`}
-                      width={40}
-                      height={40}
-                      loading="lazy"
-                      style={{ width: "auto", height: "auto" }}
-                    />
-                  ) : (
-                    <stk.icon className={`h-10 w-10 ${stk.color || ""}`} aria-hidden="true" />
-                  )}
-                </a>
-              </div>
-            </SimpleTooltip>
-          );
-        })}
+    <Section
+      id="toolkit"
+      index="04"
+      title="Toolkit"
+      meta={`${TECH_STACK.length} tools`}
+    >
+      <div className="overflow-hidden">
+        <ul className="-mb-px -mr-px grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9">
+          {TECH_STACK.map((stk) => (
+            <li key={stk.title} className="border-b border-r border-border">
+              <a
+                href={stk.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full flex-col items-center justify-center gap-2.5 px-1 py-4 transition-colors hover:bg-muted/60"
+              >
+                {typeof stk.icon === "string" ? (
+                  <Image
+                    src={stk.icon}
+                    alt=""
+                    width={28}
+                    height={28}
+                    unoptimized
+                    loading="lazy"
+                    className="size-7 object-contain opacity-80 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+                  />
+                ) : (
+                  <stk.icon
+                    aria-hidden="true"
+                    className="size-7 text-foreground/75 transition-colors duration-300 group-hover:text-foreground"
+                  />
+                )}
+                <span className="w-full truncate text-center font-mono text-[10px] text-muted-foreground transition-colors group-hover:text-foreground">
+                  {stk.title}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="border-t absolute w-screen left-1/2 -translate-x-1/2" aria-hidden="true"></div>
-    </section>
+    </Section>
   );
 }
