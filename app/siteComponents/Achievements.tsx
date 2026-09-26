@@ -1,36 +1,36 @@
 import { achieve_list } from "../config/achievement";
+import Section from "./Section";
 
 const Achievements = () => {
   return (
-    <section aria-labelledby="achievements-heading">
-      <div>
-        <h2 id="achievements-heading" className="text-2xl font-jura tracking-wide text-gray-600 dark:text-gray-400 pl-2">
-          ACHIEVEMENTS
-        </h2>
-
-        <div>
-          {achieve_list.map((achieve, index) => (
-            <div
-              key={index}
-              className="border-b flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4 py-3 sm:py-2"
-            >
-              <div className="flex items-center gap-2 sm:gap-4">
-                <span className="flex-shrink-0">
-                  <achieve.icon className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500 ml-2" />
-                </span>
-                
-                <p className="font-jura text-xs sm:text-sm flex-1 sm:w-auto sm:max-w-[500px] text-gray-800 dark:text-gray-200">
-                  {achieve.title}
-                </p>
-              </div>
-              <p className="font-maven text-xs sm:text-sm ml-9 sm:ml-0 sm:mr-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mb-4">
+    <Section
+      id="commendations"
+      index="05"
+      title="Commendations"
+      meta={`${achieve_list.length} on record`}
+    >
+      <ol>
+        {achieve_list.map((achieve, index) => (
+          <li
+            key={achieve.title}
+            className="flex items-baseline gap-4 border-b border-border px-4 py-3.5 last:border-b-0 sm:px-6"
+          >
+            <span className="shrink-0 font-mono text-[11px] text-signal">
+              C-{String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="min-w-0 flex-1 text-[15px] leading-6">
+              {achieve.title}
+              <span className="mt-0.5 block font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground sm:hidden">
                 {achieve.time}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+              </span>
+            </span>
+            <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground sm:block">
+              {achieve.time}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 };
 
