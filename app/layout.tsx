@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Jura, Maven_Pro } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import StructuredData from "./components/StructuredData";
 
@@ -17,17 +17,11 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const maven = Maven_Pro({
-  variable: "--font-maven",
+const instrument = Instrument_Serif({
+  variable: "--font-instrument",
   subsets: ["latin"],
-  weight: ["400", "700"],
-  display: "swap",
-  preload: true,
-});
-
-const jura = Jura({
-  variable: "--font-jura",
-  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
   display: "swap",
   preload: true,
 });
@@ -148,8 +142,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable}
-       ${jura.variable} ${maven.variable} antialiased min-h-screen w-screen overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} ${instrument.variable} font-sans antialiased min-h-screen w-screen overflow-x-hidden`}
       >
         {children}
       </body>

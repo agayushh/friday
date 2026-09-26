@@ -1,36 +1,40 @@
+import { Suspense } from "react";
 import { achieve_list } from "../config/achievement";
+import Section from "./Section";
+import Stats from "./Stats";
 
 const Achievements = () => {
   return (
-    <section aria-labelledby="achievements-heading">
-      <div>
-        <h2 id="achievements-heading" className="text-2xl font-jura tracking-wide text-gray-600 dark:text-gray-400 pl-2">
-          ACHIEVEMENTS
-        </h2>
+    <Section id="record" index="05" label="Record">
+      <ul className="max-w-[48rem]">
+        {achieve_list.map((achieve) => (
+          <li
+            key={achieve.title}
+            className="grid gap-1 border-b border-border py-4 last:border-b-0 sm:grid-cols-[9.5rem_1fr] sm:gap-8 sm:py-5"
+          >
+            <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+              {achieve.time}
+            </p>
+            <p className="text-[15px] leading-relaxed">{achieve.title}</p>
+          </li>
+        ))}
+      </ul>
 
-        <div>
-          {achieve_list.map((achieve, index) => (
-            <div
-              key={index}
-              className="border-b flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4 py-3 sm:py-2"
-            >
-              <div className="flex items-center gap-2 sm:gap-4">
-                <span className="flex-shrink-0">
-                  <achieve.icon className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-500 ml-2" />
-                </span>
-                
-                <p className="font-jura text-xs sm:text-sm flex-1 sm:w-auto sm:max-w-[500px] text-gray-800 dark:text-gray-200">
-                  {achieve.title}
-                </p>
-              </div>
-              <p className="font-maven text-xs sm:text-sm ml-9 sm:ml-0 sm:mr-4 text-gray-500 dark:text-gray-400 flex-shrink-0 mb-4">
-                {achieve.time}
-              </p>
-            </div>
-          ))}
-        </div>
+      <div className="mt-14">
+        <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+          GitHub
+        </p>
+        <Suspense
+          fallback={
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+              Loading contributions
+            </p>
+          }
+        >
+          <Stats />
+        </Suspense>
       </div>
-    </section>
+    </Section>
   );
 };
 

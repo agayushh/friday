@@ -1,77 +1,35 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+
+import React, { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
-import { FiMoon } from "react-icons/fi";
-import { LuSunMedium } from "react-icons/lu";
-import { FaGithub } from "react-icons/fa";
-import { HiMenu, HiX } from "react-icons/hi";
+import { RESUME_URL } from "../config/info";
+
+const LINKS = [
+  { href: "#experience", label: "Work" },
+  { href: "#projects", label: "Projects" },
+  { href: "#contact", label: "Contact" },
+];
+
+const INDEX = [
+  { href: "#about", index: "01", label: "About" },
+  { href: "#experience", index: "02", label: "Work" },
+  { href: "#projects", index: "03", label: "Projects" },
+  { href: "#tools", index: "04", label: "Tools" },
+  { href: "#record", index: "05", label: "Record" },
+  { href: "#contact", index: "06", label: "Contact" },
+];
 
 const Navbar = () => {
-  // Initialize with a function to read localStorage on first render
-  const [darkMode, setDarkMode] = useState(() => {
-    // This runs only on client-side during initial render
-    if (typeof window !== "undefined") {
-      const theme = localStorage.getItem("theme");
-      return theme !== "light"; // Default to dark mode
-    }
-    return true; // Server-side default
-  });
+  const [darkMode, setDarkMode] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showLogo, setShowLogo] = useState(false);
-  const navbarRef = useRef<HTMLDivElement>(null);
-
-  // Sync with system preference or localStorage on mount
-  useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    const isDark = theme !== "light";
-    setDarkMode(isDark);
-
-    // Apply the class to ensure consistency
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, []);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        navbarRef.current &&
-        !navbarRef.current.contains(event.target as Node)
-      ) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    if (isMenuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isMenuOpen]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // The header is at mt-[58px] (navbar height) and has min-h-58
-      // Show logo when scrolled past approximately 116px (58px navbar + 58px header minimum)
-      const scrollThreshold = 150;
-      setShowLogo(window.scrollY > scrollThreshold);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    setDarkMode(document.documentElement.classList.contains("dark"));
   }, []);
 
   const toggleDarkMode = (event?: React.MouseEvent<HTMLButtonElement>) => {
     const isAppearanceTransition =
-      typeof document !== "undefined" &&
-      // @ts-ignore
-      document.startViewTransition &&
+      typeof document.startViewTransition === "function" &&
       !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const performToggle = (nextMode: boolean) => {
@@ -98,7 +56,6 @@ const Navbar = () => {
       Math.max(y, window.innerHeight - y)
     );
 
-    // @ts-ignore
     const transition = document.startViewTransition(() => {
       flushSync(() => {
         const nextMode = !darkMode;
@@ -124,148 +81,109 @@ const Navbar = () => {
     });
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const navbarHeight = 58; // Height of the fixed navbar
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition =
-        elementPosition + window.pageYOffset - navbarHeight;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-    setIsMenuOpen(false); // Close mobile menu after clicking
-  };
-
   return (
-    <div
-      ref={navbarRef}
-      className="fixed top-0 left-0 w-screen bg-white dark:bg-[#09090b] z-50 transition-colors duration-300"
-    >
-      <div className="w-full border-y mt-1.5 py-3 h-12">
-        <div className="flex justify-center items-center w-full h-full">
-          <div className="flex justify-between items-center w-11/12 sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-6/12 px-4 text-gray-900 dark:text-white transition-all duration-300 ease-in-out">
-            {/* Logo on the left */}
-            <div
-              className={`font-jura text-4xl sm:text-5xl transition-all duration-300 ${
-                showLogo
-                  ? "opacity-100 translate-x-0"
-                  : "opacity-0 -translate-x-4"
-              }`}
+    <>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+      <a
+        href="#content"
+        className="absolute -left-[999px] top-3 z-[60] bg-background px-3 py-2 font-mono text-[11px] uppercase tracking-[0.16em] focus:left-4"
+      >
+        Skip to content
+      </a>
+      <div className="mx-auto flex h-14 max-w-[1040px] items-center justify-between px-5 sm:px-8 lg:px-10">
+        <a href="#top" className="font-serif text-lg italic tracking-tight">
+          Ayush
+        </a>
+
+        <nav className="hidden items-center gap-6 sm:flex" aria-label="Primary">
+          {LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="link font-mono text-[11px] uppercase tracking-[0.16em]"
             >
-              AG
-            </div>
+              {link.label}
+            </a>
+          ))}
+          <a
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link font-mono text-[11px] uppercase tracking-[0.16em]"
+          >
+            Resume
+          </a>
+        </nav>
 
-            {/* Desktop Navigation on the right */}
-            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-              <div className="font-jura flex space-x-4 lg:space-x-6 items-center">
-                <span className="cursor-pointer hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
-                  <a
-                    href="https://drive.google.com/file/d/118Fjl7KgCKGMMohqkmRFh_UUGBit5X8Q/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Resume
-                  </a>
-                </span>
-                <span
-                  className="cursor-pointer hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                  onClick={() => scrollToSection("projects")}
-                >
-                  Projects
-                </span>
-                <span
-                  className="cursor-pointer hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                  onClick={() => scrollToSection("experience")}
-                >
-                  Experience
-                </span>
-              </div>
-              <a
-                href="https://github.com/agayushh/friday"
-                className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                aria-label="GitHub"
-              >
-                <FaGithub size={18} />
-              </a>
-              <button
-                onClick={toggleDarkMode}
-                className="rounded-lg transition-all duration-300"
-                aria-label="Toggle dark mode"
-              >
-                {darkMode ? <LuSunMedium size={18} /> : <FiMoon size={18} />}
-              </button>
-            </div>
-
-            {/* Mobile Menu Button on the right */}
-            <div className="flex md:hidden items-center space-x-3">
-              <a
-                href="https://github.com/agayushh/friday"
-                className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-                aria-label="GitHub"
-              >
-                <FaGithub size={18} />
-              </a>
-              <button
-                onClick={toggleDarkMode}
-                className="px-2 rounded-lg transition-all duration-300"
-                aria-label="Toggle dark mode"
-              >
-                {darkMode ? <LuSunMedium size={18} /> : <FiMoon size={18} />}
-              </button>
-              <button
-                onClick={toggleMenu}
-                className="text-gray-900 dark:text-white"
-                aria-label="Toggle menu"
-              >
-                {isMenuOpen ? <HiX size={24} /> : <HiMenu size={24} />}
-              </button>
-            </div>
-          </div>
+        <div className="flex items-center gap-5">
+          <button
+            type="button"
+            onClick={toggleDarkMode}
+            className="link font-mono text-[11px] uppercase tracking-[0.16em]"
+            aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {darkMode ? "Light" : "Dark"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="link font-mono text-[11px] uppercase tracking-[0.16em] sm:hidden"
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? "Close" : "Menu"}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={`md:hidden absolute top-12 left-0 w-full bg-white dark:bg-[#09090b] border-b shadow-lg overflow-hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="flex flex-col font-jura px-6 py-4 space-y-4">
-          <span
-            className="cursor-pointer hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+      {isMenuOpen && (
+        <div className="border-t border-border bg-background sm:hidden">
+        <nav className="mx-auto flex max-w-[1040px] flex-col gap-4 px-5 py-5" aria-label="Mobile">
+          {INDEX.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-baseline gap-3 font-mono text-[11px] uppercase tracking-[0.16em]"
+            >
+              <span className="text-ink">{link.index}</span>
+              {link.label}
+            </a>
+          ))}
+          <a
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-baseline gap-3 font-mono text-[11px] uppercase tracking-[0.16em]"
             onClick={() => setIsMenuOpen(false)}
           >
-            <a
-              href="https://drive.google.com/file/d/118Fjl7KgCKGMMohqkmRFh_UUGBit5X8Q/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Resume
-            </a>
-          </span>
-          <span
-            className="cursor-pointer hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-            onClick={() => scrollToSection("projects")}
-          >
-            Projects
-          </span>
-          <span
-            className="cursor-pointer hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-            onClick={() => scrollToSection("experience")}
-          >
-            Experience
-          </span>
+            <span className="text-ink">→</span>
+            Resume
+          </a>
+        </nav>
         </div>
-      </div>
-    </div>
+      )}
+    </header>
+
+    <nav
+        aria-label="Index"
+        className="fixed top-1/2 z-40 hidden -translate-y-1/2 min-[1180px]:block"
+        style={{ left: "max(1rem, calc(50vw - 560px))" }}
+      >
+        <ol className="space-y-3">
+          {INDEX.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className="font-mono text-[11px] tracking-[0.14em] text-ink transition-colors hover:text-foreground"
+              >
+                {link.index}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </>
   );
 };
 

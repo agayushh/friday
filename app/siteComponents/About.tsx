@@ -1,35 +1,24 @@
-import React from "react";
+import Section from "./Section";
 
 const About = () => {
   return (
-    <section id="about" className="mt-8 m-2" aria-labelledby="about-heading">
-      <h2 id="about-heading" className="text-2xl font-jura tracking-wide text-gray-600 dark:text-gray-400">
-        {" "}
-        ABOUT
-      </h2>
-      <div className="border-b absolute left-1/2 -translate-x-1/2 w-screen" aria-hidden="true"></div>
-      <br />
-      <div className="font-maven text-lg leading-6 text-black dark:text-white">
-        Hi, I&apos;m Ayush, a developer who works a bit like an undercover
-        operator. Most people just see me writing code, but behind the scenes,
-        I&apos;m someone who quietly solves problems, builds systems, and keeps
-        things running without drawing too much attention. I&apos;ve worked
-        across the stack and I treat every project like a mission: understand
-        the objective, plan the approach, and execute with focus. I contribute
-        to open source projects and maintain my own side projects. I enjoy
-        diving into new technologies and figuring out how to use them
-        effectively. And I am interested in knowing the system architecture and
-        design principles that make software robust and scalable. Outside of
-        code, I have organized events, led a technical club, and taken on
-        projects that push me to learn something new. And I have also got
-        acknowledged by{" "}
-        <span className="underline">
-          Chief Minister of Haryana
-        </span>{" "}
-        for a technical project I have worked on. I&apos;m looking for
-        opportunities where I can contribute my skills and grow as a developer.
+    <Section id="about" index="01" label="About">
+      <div className="max-w-[40rem] space-y-5 text-[16px] leading-[1.75] text-foreground sm:text-[17px]">
+        <p>
+          Most of the work is quiet. I write software across the stack, look
+          after the systems around it, and try to leave a codebase clearer than
+          I found it. I care about architecture — the kind that still makes
+          sense after the demo.
+        </p>
+        <p>
+          I contribute to open source and keep a few projects of my own, mostly
+          to find out how something is actually built. I&apos;ve organized
+          events, led a technical club, and had a project acknowledged by the
+          Chief Minister of Haryana. I&apos;m looking for a team where careful
+          work is the point.
+        </p>
       </div>
-    </section>
+    </Section>
   );
 };
 

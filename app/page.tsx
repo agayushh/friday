@@ -1,49 +1,30 @@
-import React, { Suspense } from "react";
 import Navbar from "./siteComponents/Navbar";
-import Header from "./siteComponents/Header";
-import Pfp from "./siteComponents/Pfp";
-import PersonalInfo from "./siteComponents/PersonalInfo";
-import BorderSpacing from "./siteComponents/BorderSpacing";
-import Socials from "./siteComponents/Socials";
+import Hero from "./siteComponents/Hero";
 import About from "./siteComponents/About";
-import Stats from "./siteComponents/Stats";
-import Stack from "./siteComponents/Stack";
 import Experience from "./siteComponents/Experience";
 import { Project } from "./siteComponents/Projects";
-import Achievements  from "./siteComponents/Achievements";
+import Stack from "./siteComponents/Stack";
+import Achievements from "./siteComponents/Achievements";
+import Socials from "./siteComponents/Socials";
 import Footer from "./siteComponents/Footer";
 
-// Remove duplicate metadata - it's already in layout.tsx
-
-// Enable ISR (Incremental Static Regeneration) to cache the page on edge/server and load instantly
-export const revalidate = 3600; // Revalidate every hour
+export const revalidate = 3600;
 
 const Page = () => {
   return (
-    <main className="flex justify-center size-full">
-      <div className="relative border-x h-fit w-11/12 sm:w-10/12 md:w-9/12 lg:w-8/12 xl:w-7/12 2xl:w-6/12 transition-all duration-300 ease-in-out">
-        <Navbar />
-        <Header />
-        <Pfp />
-        <BorderSpacing />
-        <PersonalInfo />
-        <BorderSpacing />
-        <Socials />
-        <BorderSpacing />
+    <main id="top" className="min-h-screen">
+      <Navbar />
+      <div
+        id="content"
+        className="mx-auto w-full max-w-[1040px] px-5 sm:px-8 lg:px-10"
+      >
+        <Hero />
         <About />
-        <BorderSpacing />
-        <Suspense fallback={<div className="p-4 text-center" role="status" aria-live="polite">Loading statistics...</div>}>
-          <Stats />
-        </Suspense>
-        <BorderSpacing />
-        <Stack />
-        <BorderSpacing />
         <Experience />
-        <BorderSpacing />
         <Project />
-        <BorderSpacing />
+        <Stack />
         <Achievements />
-        <BorderSpacing />
+        <Socials />
         <Footer />
       </div>
     </main>

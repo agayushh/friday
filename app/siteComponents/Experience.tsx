@@ -1,14 +1,11 @@
 import { EXP_LIST } from "../config/experience";
 import ExperienceClient from "./ExperienceClient";
+import Section from "./Section";
 
 export default function Experience() {
   return (
-    <section id="experience" className="mt-10 pl-3" aria-labelledby="experience-heading">
-      <h2 id="experience-heading" className="text-2xl pt-2 font-jura text-gray-600 dark:text-gray-400 tracking-wide">
-        EXPERIENCE
-      </h2>
-      <div className="left-1/2 -translate-x-1/2 border-t w-screen absolute"></div>
+    <Section id="experience" index="02" label="Work">
       <ExperienceClient experiences={EXP_LIST} />
-    </section>
+    </Section>
   );
 }

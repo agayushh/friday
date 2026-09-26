@@ -7,7 +7,11 @@ const GitHubGraph = async () => {
   const data = await getGitHubContributions();
 
   if (data.length === 0) {
-    return <div>No contribution data available</div>;
+    return (
+      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+        Contributions unavailable
+      </p>
+    );
   }
 
   return <GitHubGraphClient data={data} />;
@@ -16,7 +20,13 @@ const GitHubGraph = async () => {
 // Wrap with Suspense for loading state
 const GitHubGraphWithSuspense = () => {
   return (
-    <Suspense fallback={<div>Loading contributions...</div>}>
+    <Suspense
+      fallback={
+        <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+          Loading contributions
+        </p>
+      }
+    >
       <GitHubGraph />
     </Suspense>
   );

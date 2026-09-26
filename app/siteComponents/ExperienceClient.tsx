@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 interface ExperienceType {
@@ -13,72 +12,71 @@ interface ExperienceType {
   task: string[];
 }
 
-export default function ExperienceClient({ experiences }: { experiences: ExperienceType[] }) {
-  const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+export default function ExperienceClient({
+  experiences,
+}: {
+  experiences: ExperienceType[];
+}) {
+  const [expandedItems, setExpandedItems] = useState<Set<number>>(
+    () => new Set([0])
+  );
 
   const toggleExpand = (index: number) => {
     setExpandedItems((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
+      const next = new Set(prev);
+      if (next.has(index)) next.delete(index);
+      else next.add(index);
+      return next;
     });
   };
 
   return (
-    <div className="space-y-1">
+    <div className="max-w-[48rem]">
       {experiences.map((exp, index) => {
         const isExpanded = expandedItems.has(index);
         return (
-          <div key={exp.Index} className="border-b pb-2 mt-1 left-0">
-            <div className="flex justify-between">
-              <div>
-                <div className="text-lg font-maven text-black dark:text-white">{exp.Company}</div>
-                <div className="text-sm font-jura text-gray-600 dark:text-gray-400">
-                  {exp.Position}
-                </div>
-              </div>
-              <div className="w-30 flex flex-col items-end pt-1">
-                <div className="w-38 pl-2 font-maven text-sm text-black dark:text-white">
-                  {exp.StartDate} - {exp.EndDate}
-                </div>
-                <div className="flex space-x-1">
-                  <div className="text-sm font-jura text-gray-600 dark:text-gray-400">
-                    {exp.WorkLocation}
-                  </div>
-                  <button
-                    onClick={() => toggleExpand(index)}
-                    className="left-0 cursor-pointer hover:opacity-70 transition-all"
-                    aria-label={isExpanded ? "Collapse" : "Expand"}
-                  >
-                    <ChevronDown
-                      className={`transform transition-transform duration-300 ${
-                        isExpanded ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                isExpanded ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0"
-              }`}
-            >
-              <ul className="list-disc list-inside">
-                {exp.task.map((kaam: string, taskIndex: number) => {
-                  return (
-                    <li key={taskIndex} className="font-maven text-black dark:text-white">
-                      {kaam}
+          <article
+            key={exp.Index}
+            className="grid gap-3 border-b border-border py-7 last:border-b-0 sm:grid-cols-[9.5rem_1fr] sm:gap-8"
+          >
+            <p className="pt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+              {exp.StartDate}
+              <span className="mx-1">—</span>
+              {exp.EndDate}
+            </p>
+            <div>
+              <h3 className="font-serif text-[1.65rem] leading-none tracking-[-0.02em]">
+                {exp.Company}
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {exp.Position}
+                <span className="mx-2 text-border" aria-hidden="true">
+                  /
+                </span>
+                {exp.WorkLocation}
+              </p>
+              <button
+                type="button"
+                onClick={() => toggleExpand(index)}
+                className="link mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground"
+                aria-expanded={isExpanded}
+              >
+                {isExpanded ? "Hide notes" : "Read notes"}
+              </button>
+              {isExpanded && (
+                <ul className="mt-4 space-y-3 border-l border-border pl-4">
+                  {exp.task.map((note) => (
+                    <li
+                      key={note}
+                      className="text-[15px] leading-[1.7] text-foreground/85"
+                    >
+                      {note.trim()}
                     </li>
-                  );
-                })}
-              </ul>
+                  ))}
+                </ul>
+              )}
             </div>
-          </div>
+          </article>
         );
       })}
     </div>
