@@ -1,43 +1,73 @@
-import React from "react";
-import Image from "next/image";
-import { MoveUpRight } from "lucide-react";
+import type { IconType } from "react-icons";
+import { FaBluesky, FaGithub, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FiArrowUpRight, FiCalendar, FiMail } from "react-icons/fi";
+import { PERSONAL_INFO } from "../config/personInfo";
 import { SOCIAL_LINKS } from "../config/socials";
+import Section from "./Section";
+
+const SOCIAL_ICONS: Record<string, IconType> = {
+  LinkedIn: FaLinkedinIn,
+  GitHub: FaGithub,
+  "X (Formerly Twitter)": FaXTwitter,
+  BlueSky: FaBluesky,
+};
+
+type Channel = { label: string; value: string; href: string; icon: IconType };
 
 const Socials = () => {
-  return (
-    <div className="mt-10 border-y overflow-hidden grid grid-cols-1 sm:grid-cols-2">
-      {SOCIAL_LINKS.map((social, index) => (
-        <div
-          key={index}
-          className="flex items-center justify-between group p-4 hover:bg-gray-50 dark:hover:bg-[#111] transition-colors border-b last:border-b-0 sm:border-r sm:even:border-r-0 sm:[&:nth-last-child(-n+2)]:border-b-0"
-        >
-          <div className="flex items-center space-x-4">
-            <a href={social.href} target="_blank" rel="noopener noreferrer">
-              <Image
-                src={social.icon}
-                alt={social.title}
-                className="h-12 rounded-2xl"
-                width={48}
-                height={48}
-                loading="lazy"
-              />
-            </a>
+  const email = PERSONAL_INFO.find((item) => item.title === "Email");
+  const meet = PERSONAL_INFO.find((item) => item.title === "Schedule a Meet");
 
-            <div>
-              <a href={social.href} target="_blank" rel="noopener noreferrer">
-                <p className="font-medium text-black dark:text-white group-hover:underline">
-                  {social.title}
-                </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400 font-jura">
-                  {social.description}
-                </p>
-              </a>
-            </div>
-          </div>
-          <MoveUpRight className="h-5 text-black dark:text-white" />
-        </div>
-      ))}
-    </div>
+  const channels: Channel[] = [
+    ...(email
+      ? [{ label: "Email", value: email.information, href: `mailto:${email.information}`, icon: FiMail }]
+      : []),
+    ...(meet?.href
+      ? [{ label: "Meeting", value: "calendly / 30min", href: meet.href, icon: FiCalendar }]
+      : []),
+    ...SOCIAL_LINKS.map((social) => ({
+      label: social.title.startsWith("X") ? "X" : social.title,
+      value: social.description ?? social.href,
+      href: social.href,
+      icon: SOCIAL_ICONS[social.title] ?? FiArrowUpRight,
+    })),
+  ];
+
+  return (
+    <Section id="contact" index="07" title="Channels" meta="Line open">
+      <div className="overflow-hidden">
+        <ul className="-mb-px grid sm:-mr-px sm:grid-cols-2">
+          {channels.map(({ label, value, href, icon: Icon }) => {
+            const external = href.startsWith("http");
+            return (
+              <li key={label} className="border-b border-border sm:border-r">
+                <a
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="group flex items-center gap-3.5 px-4 py-4 transition-colors hover:bg-muted/60 sm:px-6"
+                >
+                  <Icon
+                    aria-hidden="true"
+                    className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-signal"
+                  />
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                      {label}
+                    </span>
+                    <span className="block truncate text-sm">{value}</span>
+                  </span>
+                  <FiArrowUpRight
+                    aria-hidden="true"
+                    className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground"
+                  />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Section>
   );
 };
 
