@@ -1,27 +1,19 @@
-import React, { Suspense } from "react";
 import GitHubGraphWithSuspense from "../Statistics/githubStats/GitStats";
-
-// Loading components for better UX
-function GitHubStatsLoading() {
-  return (
-    <div className="h-48 flex items-center justify-center border rounded-lg bg-muted/10">
-      <div className="text-sm text-gray-600 dark:text-gray-400">Loading GitHub stats...</div>
-    </div>
-  );
-}
+import { GITHUB_USERNAME } from "../config/info";
+import Section from "./Section";
 
 const Stats = () => {
   return (
-    <div className="mt-10 m-2">
-      <h2 className="text-2xl tracking-wide font-jura text-gray-600 dark:text-gray-400 font-medium">REPORT</h2>
-      <div className="border-b absolute left-1/2 -translate-x-1/2 w-screen"></div>
-      <br />
-      <div className="w-full space-y-4">
-        <Suspense fallback={<GitHubStatsLoading />}>
-          <GitHubGraphWithSuspense/>
-        </Suspense>
+    <Section
+      id="activity"
+      index="06"
+      title="Activity log"
+      meta={`github / ${GITHUB_USERNAME}`}
+    >
+      <div className="activity px-4 py-5 font-mono text-[11px] text-muted-foreground sm:px-6 sm:py-6">
+        <GitHubGraphWithSuspense />
       </div>
-    </div>
+    </Section>
   );
 };
 

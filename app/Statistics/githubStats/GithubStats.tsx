@@ -23,7 +23,12 @@ interface GitHubGraphClientProps {
 const GitHubGraphClient = ({ data }: GitHubGraphClientProps) => {
   return (
     <TooltipProvider>
-      <ContributionGraph data={data}>
+      <ContributionGraph
+        data={data}
+        blockRadius={2}
+        fontSize={11}
+        labels={{ totalCount: "{{count}} contributions in the last year" }}
+      >
         <ContributionGraphCalendar>
           {({ activity, dayIndex, weekIndex }) => (
             <Tooltip>
