@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FiArrowUpRight } from "react-icons/fi";
-import { Projects_List } from "../config/projects";
+import { PROJECTS_PAGE } from "../config/info";
+import { PROJECTS, Projects_List } from "../config/projects";
 import Section from "./Section";
 
 export const Project = () => {
@@ -84,6 +86,16 @@ export const Project = () => {
             );
           })}
         </div>
+        <Link
+          href={PROJECTS_PAGE}
+          className="flex items-center justify-between border-t border-border px-4 py-3.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground sm:px-6"
+        >
+          <span>
+            All projects{" "}
+            <span className="text-foreground">{String(PROJECTS.length).padStart(2, "0")}</span>
+          </span>
+          <FiArrowUpRight aria-hidden="true" />
+        </Link>
       </div>
     </Section>
   );
