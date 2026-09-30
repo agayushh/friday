@@ -4,13 +4,18 @@ import React, { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { usePathname } from "next/navigation";
 import { FiArrowUpRight, FiMoon, FiSun } from "react-icons/fi";
-import { RESUME_PAGE } from "../config/info";
+import { PROJECTS_PAGE, RESUME_PAGE } from "../config/info";
 
 const LINKS = [
   { href: "#profile", label: "Profile" },
   { href: "#experience", label: "Record" },
   { href: "#operations", label: "Operations" },
   { href: "#contact", label: "Contact" },
+];
+
+const PAGE_LINKS = [
+  { href: PROJECTS_PAGE, label: "Projects" },
+  { href: RESUME_PAGE, label: "Resume" },
 ];
 
 const Navbar = () => {
@@ -84,19 +89,22 @@ const Navbar = () => {
           AG<span className="text-signal">.</span>
         </a>
 
-        <nav className="hidden items-center gap-5 sm:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-4 sm:flex" aria-label="Primary">
           {LINKS.map((link) => (
             <a key={link.href} href={hrefFor(link.href)} className={linkClass}>
               {link.label}
             </a>
           ))}
-          <a
-            href={RESUME_PAGE}
-            aria-current={pathname === RESUME_PAGE ? "page" : undefined}
-            className={linkClass}
-          >
-            Resume
-          </a>
+          {PAGE_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              aria-current={pathname === link.href ? "page" : undefined}
+              className={linkClass}
+            >
+              {link.label}
+            </a>
+          ))}
         </nav>
 
         <div className="flex items-center gap-1">
@@ -126,7 +134,7 @@ const Navbar = () => {
           aria-label="Mobile"
           className="border-t border-border bg-background sm:hidden"
         >
-          {[...LINKS, { href: RESUME_PAGE, label: "Resume" }].map((link, index) => {
+          {[...LINKS, ...PAGE_LINKS].map((link, index) => {
             const href = hrefFor(link.href);
             const external = href.startsWith("http");
             return (
