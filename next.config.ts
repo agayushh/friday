@@ -86,6 +86,15 @@ const nextConfig: NextConfig = {
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
         ],
       },
+      {
+        source: '/resume.pdf',
+        headers: [
+          {
+            key: 'Content-Disposition',
+            value: 'inline; filename="Ayush-Goyal-Resume.pdf"',
+          },
+        ],
+      },
     ]
   },
 };

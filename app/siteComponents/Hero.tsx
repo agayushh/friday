@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa6";
-import { FiArrowUpRight } from "react-icons/fi";
 import ProfilePic from "@/public/avatar-light.webp";
 import ProfilePicDark from "@/public/avatar-dark.webp";
 import { PERSONAL_INFO } from "../config/personInfo";
-import { GITHUB_USERNAME, RESUME_URL } from "../config/info";
+import { GITHUB_USERNAME, RESUME_PAGE } from "../config/info";
 
 const CORNERS = [
   "left-0 top-0 border-l border-t",
@@ -135,12 +134,10 @@ const Hero = () => {
 
       <div className="flex flex-wrap gap-2 px-4 py-4 sm:px-6">
         <a
-          href={RESUME_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex h-9 items-center gap-1.5 rounded-md bg-foreground px-3.5 font-mono text-[11px] uppercase tracking-[0.14em] text-background transition-opacity hover:opacity-85"
+          href={RESUME_PAGE}
+          className="inline-flex h-9 items-center rounded-md bg-foreground px-3.5 font-mono text-[11px] uppercase tracking-[0.14em] text-background transition-opacity hover:opacity-85"
         >
-          Resume <FiArrowUpRight className="size-3.5" aria-hidden="true" />
+          Resume
         </a>
         <a
           href={`https://github.com/${GITHUB_USERNAME}`}

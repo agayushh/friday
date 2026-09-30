@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
+import { usePathname } from "next/navigation";
 import { FiArrowUpRight, FiMoon, FiSun } from "react-icons/fi";
-import { RESUME_URL } from "../config/info";
+import { RESUME_PAGE } from "../config/info";
 
 const LINKS = [
   { href: "#profile", label: "Profile" },
@@ -13,8 +14,14 @@ const LINKS = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [darkMode, setDarkMode] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const hrefFor = (href: string) => {
+    if (href.startsWith("/") || href.startsWith("http")) return href;
+    return pathname === "/" ? href : `/${href}`;
+  };
 
   useEffect(() => {
     setDarkMode(document.documentElement.classList.contains("dark"));
@@ -70,23 +77,25 @@ const Navbar = () => {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between border-border px-4 sm:border-x sm:px-6">
-        <a href="#top" className="font-mono text-sm font-semibold tracking-tight">
+        <a
+          href={pathname === "/" ? "#top" : "/"}
+          className="font-mono text-sm font-semibold tracking-tight"
+        >
           AG<span className="text-signal">.</span>
         </a>
 
         <nav className="hidden items-center gap-5 sm:flex" aria-label="Primary">
           {LINKS.map((link) => (
-            <a key={link.href} href={link.href} className={linkClass}>
+            <a key={link.href} href={hrefFor(link.href)} className={linkClass}>
               {link.label}
             </a>
           ))}
           <a
-            href={RESUME_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${linkClass} inline-flex items-center gap-1`}
+            href={RESUME_PAGE}
+            aria-current={pathname === RESUME_PAGE ? "page" : undefined}
+            className={linkClass}
           >
-            Resume <FiArrowUpRight aria-hidden="true" />
+            Resume
           </a>
         </nav>
 
@@ -117,15 +126,17 @@ const Navbar = () => {
           aria-label="Mobile"
           className="border-t border-border bg-background sm:hidden"
         >
-          {[...LINKS, { href: RESUME_URL, label: "Resume" }].map((link, index) => {
-            const external = link.href.startsWith("http");
+          {[...LINKS, { href: RESUME_PAGE, label: "Resume" }].map((link, index) => {
+            const href = hrefFor(link.href);
+            const external = href.startsWith("http");
             return (
               <a
                 key={link.href}
-                href={link.href}
+                href={href}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
                 onClick={() => setIsMenuOpen(false)}
+                aria-current={href === pathname ? "page" : undefined}
                 className="flex items-center gap-3 border-b border-border px-4 py-3.5 font-mono text-[11px] uppercase tracking-[0.16em] last:border-b-0"
               >
                 <span className="text-signal">{String(index + 1).padStart(2, "0")}</span>
