@@ -1,6 +1,45 @@
 export const EXP_LIST = [
   {
     Index: 1,
+    Position: "Software Developer Intern",
+    Company: "Octalucent Software Solutions",
+    StartDate: "Mar 2026",
+    EndDate: "Present",
+    WorkLocation: "Hybrid, India",
+    task: [
+      "Fixed production UI bugs across responsiveness, layout, CSS, and client state management.",
+      "Modularized shared TypeScript types and feature logic, making the production codebase easier to extend.",
+      "Simplified backend and database code paths, reducing structural complexity and improving performance.",
+    ],
+  },
+  {
+    Index: 2,
+    Position: "Software Development Engineer Intern",
+    Company: "Paradize Space",
+    StartDate: "Sep 2025",
+    EndDate: "Feb 2026",
+    WorkLocation: "Remote, India",
+    task: [
+      "Built the platform for documenting and sharing hardware projects with reusable build specifications.",
+      "Developed core features for publishing, discovering, and replicating hardware projects.",
+      "Contributed to the marketplace and research infrastructure for the hardware builder ecosystem.",
+    ],
+  },
+  {
+    Index: 3,
+    Position: "Student",
+    Company: "Edunet x Microsoft",
+    StartDate: "Feb 2025",
+    EndDate: "Apr 2025",
+    WorkLocation: "OnSite, India",
+    task: [
+      "Built Drawhub, a whiteboard app that lets users draw diagrams and ideas in a freehand style, similar to Excalidraw.",
+      "Developed using React, TypeScript, and Canvas API, with support for drawing shapes, text, and real-time updates",
+      "Helped users share ideas quickly and improved collaboration during group projects and brainstorming sessions.",
+    ],
+  },
+  {
+    Index: 4,
     Position: "Full Stack Developer",
     Company: "DataWave Labs",
     StartDate: "Jun 2024",
@@ -12,19 +51,6 @@ export const EXP_LIST = [
       "Designed and implemented the frontend for the query generator tool using React and Tailwind CSS, delivering an intuitive and responsive user interface.",
       " Conducted comparative evaluation of multiple Large Language Models (LLMs) to assess performance and compatibility for production deployment.",
       "Collaborated with cross-functional teams in an Agile environment, contributing to product development cycles, debugging workflows, and ensuring smooth integration between frontend, backend, and AI models",
-    ],
-  },
-  {
-    Index: 2,
-    Position: "Student",
-    Company: "Edunet x Microsoft",
-    StartDate: "Feb 2025",
-    EndDate: "Apr 2025",
-    WorkLocation: "OnSite, India",
-    task: [
-      "Built Drawhub, a whiteboard app that lets users draw diagrams and ideas in a freehand style, similar to Excalidraw.",
-      "Developed using React, TypeScript, and Canvas API, with support for drawing shapes, text, and real-time updates",
-      "Helped users share ideas quickly and improved collaboration during group projects and brainstorming sessions.",
     ],
   },
 ];
